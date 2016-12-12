@@ -1,19 +1,23 @@
 /*EJERCICIO 1:
-Vamos a crear las tablas para una Academia donde se imparten distintos cursos de informática. Empezaremos creando con SQL las siguientes tablas:
-•	Tabla ALUMNOS recogerá información sobre el alumnado: Nombre, Apellido1, Apellido2, NIF, Dirección, Sexo, Fecha de Nacimiento y Curso en el que se matricula.
-•	Tabla CURSOS con los siguientes campos: Nombre del Curso, Código del Curso que lo identifica, NIF del Profesor, Máximo número de alumnos/as recomendado, Fecha de inicio, Fecha final, Número de horas totales del curso. Los alumnos/as no pueden compaginar varios cursos a la vez.
-•	Tabla PROFESORES con los siguientes campos: Nombre, Apellido1, Apellido2, NIF, Dirección, Titulación, Salario.
-a.	Debes elegir los nombres más adecuados para los atributos teniendo en cuenta las reglas.
-b.	Debes elegir los tipos de datos adecuados en función del contenido de los campos.
+Vamos a crear las tablas para una Academia donde se imparten distintos cursos de informÃ¡tica. Empezaremos creando con SQL
+las siguientes tablas:
+â€¢	Tabla ALUMNOS recogerÃ¡ informaciÃ³n sobre el alumnado: Nombre, Apellido1, Apellido2, NIF, DirecciÃ³n, Sexo, Fecha de Nacimiento
+y Curso en el que se matricula.
+â€¢	Tabla CURSOS con los siguientes campos: Nombre del Curso, CÃ³digo del Curso que lo identifica, NIF del Profesor, 
+MÃ¡ximo nÃºmero de alumnos/as recomendado, Fecha de inicio, Fecha final, NÃºmero de horas totales del curso. Los alumnos/as no 
+pueden compaginar varios cursos a la vez.
+â€¢	Tabla PROFESORES con los siguientes campos: Nombre, Apellido1, Apellido2, NIF, DirecciÃ³n, TitulaciÃ³n, Salario.
+a.	Debes elegir los nombres mÃ¡s adecuados para los atributos teniendo en cuenta las reglas.
+b.	Debes elegir los tipos de datos adecuados en funciÃ³n del contenido de los campos.
 c.	Debes establecer las siguientes restricciones: 
 1.	El alumno o alumna debe matricularse en un curso antes de que se le pueda dar de alta.
-2.	En un curso, el número de horas es un dato que no puede faltar, es obligatorio que contenga información.
-3.	En la tabla PROFESORES, el atributo Salario no puede estar vacío.
+2.	En un curso, el nÃºmero de horas es un dato que no puede faltar, es obligatorio que contenga informaciÃ³n.
+3.	En la tabla PROFESORES, el atributo Salario no puede estar vacÃ­o.
 4.	Dos cursos no pueden llamarse de la misma forma.
 5.	Dos profesores no pueden llamarse igual.
-6.	Podremos diferenciar las tuplas de la tabla CURSOS por el Código del Curso.
+6.	Podremos diferenciar las tuplas de la tabla CURSOS por el CÃ³digo del Curso.
 7.	Podremos diferenciar las tuplas de la tabla PROFESORES y ALUMNOS por el NIF.
-8.	La fecha de comienzo del curso nunca puede ser menor que la fecha de finalización.
+8.	La fecha de comienzo del curso nunca puede ser menor que la fecha de finalizaciÃ³n.
 9.	El dominio del atributo sexo es M (mujer) y H (hombre).
 10.	Se debe cumplir la regla de integridad referencial.
  */
@@ -69,26 +73,26 @@ CONSTRAINT ALU_SEX_CK CHECK (SEXO IN ('H','M'))
 
 /*EJERCICIO2:
 Vamos a modificar las tablas que hemos creado en el apartado anterior:
-1.	Crea un nuevo atributo llamado Edad de tipo numérico a la tabla ALUMNOS.  */
+1.	Crea un nuevo atributo llamado Edad de tipo numÃ©rico a la tabla ALUMNOS.  */
 ALTER TABLE ALUMNOS ADD (EDAD NUMBER(3));
 
-/*Añade las siguientes restricciones:
-2.	Modifica el campo que has creado anteriormente para que la edad del alumno o alumna esté comprendida entre 14 y 65 años.*/
+/*AÃ±ade las siguientes restricciones:
+2.	Modifica el campo que has creado anteriormente para que la edad del alumno o alumna estÃ© comprendida entre 14 y 65 aÃ±os.*/
 ALTER TABLE ALUMNOS MODIFY EDAD NUMBER(3) CHECK (EDAD BETWEEN 14 AND 65);
 
-/*3.	Modifica el campo Número de horas del CURSO de manera que solo pueda haber cursos con 30, 40 o 60 horas.
+/*3.	Modifica el campo NÃºmero de horas del CURSO de manera que solo pueda haber cursos con 30, 40 o 60 horas.
 DOS POSIBLES SOLUCIONES: */
 ALTER TABLE CURSOS ADD CONSTRAINT CUR_HOR_CK CHECK (HORAS_TOTAL IN (30,40, 60));
 ALTER TABLE CURSOS MODIFY HORAS_TOTAL CHECK (HORAS_TOTAL IN (30,40,60));
 
 
---4.	No podemos añadir un curso si su número máximo de alumnos es inferior a 15.
+--4.	No podemos aÃ±adir un curso si su nÃºmero mÃ¡ximo de alumnos es inferior a 15.
 ALTER TABLE CURSOS ADD CONSTRAINT ALU_MIN_CK CHECK (MAX_ALUMNOS>=15);
 
---5.	Elimina la restricción que controla los valores que puede tomar el atributo Sexo.
+--5.	Elimina la restricciÃ³n que controla los valores que puede tomar el atributo Sexo.
 ALTER TABLE ALUMNOS DROP CONSTRAINT ALU_SEX_CK;
 
---6.	Elimina la columna Dirección de la tabla PROFESORES.
+--6.	Elimina la columna DirecciÃ³n de la tabla PROFESORES.
 ALTER TABLE PROFESORES DROP COLUMN DIRECCION;
 
 --7.	Cambia la clave primaria de la tabla PROFESORES por Nombre y Apellidos.
@@ -105,7 +109,7 @@ DROP TABLE ALUMNOS;
 CREATE USER JOAQUIN IDENTIFIED BY BD02;
 GRANT ALL ON CURSOS TO JOAQUIN;
 
---11.	Ahora al usuario anterior quítale permisos para modificar o actualizar la tabla CURSOS.
+--11.	Ahora al usuario anterior quÃ­tale permisos para modificar o actualizar la tabla CURSOS.
 REVOKE UPDATE, ALTER ON CURSOS FROM JOAQUIN;
 
 
